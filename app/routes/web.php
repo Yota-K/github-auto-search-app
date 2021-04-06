@@ -18,5 +18,5 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 // 管理画面
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-  Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
+  Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
 });
