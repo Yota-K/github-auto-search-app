@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+// トップページ
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+
+// 管理画面
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+  Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
 });
