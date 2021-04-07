@@ -1,17 +1,17 @@
 @extends ('layouts.app')
 
 @section ('content')
-  <h2>管理画面</h2>
+  <h1>管理画面</h1>
   @if (!$keyword_groups)
     <p>キーワードが登録されていません</p>
   @else
-    <table class="table-auto">
+    <table class="w-full table-auto">
       <tr>
-        <th class="px-4 py-2">キーワード</th>
-        <th class="px-4 py-2">検索結果</th>
-        <th class="px-4 py-2">自動チェック</th>
-        <th class="px-4 py-2">チェック日時</th>
-        <th class="px-4 py-2">メモ</th>
+        <th class="text-base px-4 py-2">キーワード</th>
+        <th class="text-base px-4 py-2">検索結果</th>
+        <th class="text-base px-4 py-2">自動チェック</th>
+        <th class="text-base px-4 py-2">チェック日時</th>
+        <th class="text-base px-4 py-2">メモ</th>
       </tr>
       <tbody>
         @foreach ($keyword_groups as $keyword_group)

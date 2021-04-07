@@ -10,7 +10,7 @@
   <body class="antialiased">
     @include ('includes.header')
     <main>
-      <div class="container m-auto px-5 py-20">
+      <div class="container max-w-5xl m-auto pt-36 md:pt-16 px-2">
         @yield ('content')
       </div>
     </main>
