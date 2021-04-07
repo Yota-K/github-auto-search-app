@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ヘッダー */
+.nav-link {
+  @apply block m-2;
+}
+
+/* フォーム周り */

@@ -31175,6 +31175,15 @@ video {
           animation: bounce 1s infinite;
 }
 
+/* ヘッダー */
+
+.nav-link {
+  display: block;
+  margin: 0.5rem;
+}
+
+/* フォーム周り */
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
