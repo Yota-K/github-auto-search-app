@@ -2,7 +2,20 @@
 @extends ('layouts.app')
 
 @section ('content')
-  <h1 class="text-2xl">{{ $title }}</h1>
+  <div class="flex justify-between">
+    <h1 class="text-2xl">{{ $title }}</h1>
+    <form method="POST" action="{{ route('keyword.destroy', ['keyword' => $keyword_group->id]) }}">
+      @csrf
+      @method ('DELETE')
+      <button 
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        type="submit"
+        onClick="return deleteKeywordGroup() "
+      >
+        削除
+      </button>
+    </form>
+  </div>
   @if ($errors->any())
     <div class="alert alert-danger">
       <ul>
@@ -62,4 +75,15 @@
       value="登録"
     >
   </form>
+
+  <script>
+  const deleteKeywordGroup = e => {
+    if (!window.confirm('削除しますか？')) {
+      window.alert('キャンセルされました'); 
+      return false;
+    }
+
+    return true;
+  }
+  </script>
 @endsection

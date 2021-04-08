@@ -22,7 +22,7 @@ class KeywordGroupController extends Controller
   /**
    * データの保存処理
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Http\Requests\KeywordGroupRequest  $request
    * @return \Illuminate\Http\Response
    */
   public function store(KeywordGroupRequest $request)
@@ -51,7 +51,7 @@ class KeywordGroupController extends Controller
   /**
    * データの編集画面
    *
-   * @param  \App\Models\KeywordGroup  $keywordGroup
+   * @param  \App\Models\KeywordGroup  $id
    * @return \Illuminate\Http\Response
    */
   public function edit(int $id)
@@ -63,8 +63,8 @@ class KeywordGroupController extends Controller
   /**
    * データの更新処理
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\KeywordGroup  $keywordGroup
+   * @param  \App\Http\Requests\KeywordGroupRequest  $request
+   * @param  \App\Models\KeywordGroup  $id
    * @return \Illuminate\Http\Response
    */
   public function update(KeywordGroupRequest $request, int $id)
@@ -88,13 +88,16 @@ class KeywordGroupController extends Controller
   }
 
   /**
-   * Remove the specified resource from storage.
+   * 削除処理
    *
-   * @param  \App\Models\KeywordGroup  $keywordGroup
+   * @param  \App\Models\KeywordGroup  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy(KeywordGroup $keywordGroup)
+  public function destroy(int $id)
   {
-      //
+    $KeywordGroup = KeywordGroup::where('id', $id)->findOrFail($id);
+    $KeywordGroup->delete();
+
+    return redirect('/admin');
   }
 }
