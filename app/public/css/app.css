@@ -31184,6 +31184,14 @@ video {
 
 /* フォーム周り */
 
+.form-heading {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgba(55, 65, 81, var(--tw-text-opacity));
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
