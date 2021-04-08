@@ -27,4 +27,21 @@ class KeywordGroup extends Model
   protected $casts = [
     'check_result' => 'boolean'
   ];
+
+  /**
+   * 編集画面に表示する整形済みの日付と時間
+   * <input type="datetime-local" >のvalueとして指定する
+   * @var string
+   */
+  public function auto_check_date_formatted()
+  {
+    $auto_check_date = $this->auto_check_date;
+
+    if ($auto_check_date) {
+      $date = $auto_check_date->format('Y-m-dTH:i');
+      return preg_replace('/JST/', 'T', $date);
+    } else {
+      return '';
+    }
+  }
 }

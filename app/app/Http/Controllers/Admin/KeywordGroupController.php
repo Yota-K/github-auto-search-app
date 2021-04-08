@@ -21,7 +21,7 @@ class KeywordGroupController extends Controller
   }
 
   /**
-   * Show the form for creating a new resource.
+   * データの新規作成
    *
    * @return \Illuminate\Http\Response
    */
@@ -31,7 +31,7 @@ class KeywordGroupController extends Controller
   }
 
   /**
-   * Store a newly created resource in storage.
+   * データの保存処理
    *
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
@@ -71,26 +71,42 @@ class KeywordGroupController extends Controller
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * データの編集画面
    *
    * @param  \App\Models\KeywordGroup  $keywordGroup
    * @return \Illuminate\Http\Response
    */
-  public function edit(KeywordGroup $keywordGroup)
+  public function edit(int $id)
   {
-      //
+    $keyword_group = KeywordGroup::findOrFail($id);
+    return view('admin.keyword_group.edit', compact('keyword_group'));
   }
 
   /**
-   * Update the specified resource in storage.
+   * データの更新処理
    *
    * @param  \Illuminate\Http\Request  $request
    * @param  \App\Models\KeywordGroup  $keywordGroup
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, KeywordGroup $keywordGroup)
+  public function update(KeywordGroupRequest $request, int $id)
   {
-      //
+    $KeywordGroup = KeywordGroup::where('id', $id)->findOrFail($id);
+
+    $KeywordGroup->keyword = $request->keyword;
+    $KeywordGroup->search_repository_num = $request->search_repository_num;
+
+    $keyword_memo = $request->keyword_memo;
+    $auto_check_date = $request->auto_check_date;
+
+    if ($auto_check_date || $keyword_memo) {
+      $KeywordGroup->auto_check_date = $auto_check_date;
+      $KeywordGroup->keyword_memo = $keyword_memo;
+    }
+
+    $KeywordGroup->save();
+
+    return redirect()->route('keyword.edit', $KeywordGroup);
   }
 
   /**
