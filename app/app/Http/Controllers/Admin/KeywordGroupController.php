@@ -4,22 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\KeywordGroup;
-use Illuminate\Http\Request;
 use App\Http\Requests\KeywordGroupRequest;
 use Illuminate\Support\Facades\Auth;
 
 class KeywordGroupController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
-  {
-      //
-  }
-
   /**
    * データの新規作成
    *
@@ -57,17 +46,6 @@ class KeywordGroupController extends Controller
     $KeywordGroup->save();
 
     return redirect('/admin');
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Models\KeywordGroup  $keywordGroup
-   * @return \Illuminate\Http\Response
-   */
-  public function show(KeywordGroup $keywordGroup)
-  {
-      //
   }
 
   /**
