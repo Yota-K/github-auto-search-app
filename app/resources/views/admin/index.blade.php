@@ -8,15 +8,20 @@
     <table class="w-full table-auto">
       <tr>
         <th class="text-base px-4 py-2">キーワード</th>
+        <th class="text-base px-4 py-2">検索を行うリポジトリ数</th>
         <th class="text-base px-4 py-2">検索結果</th>
         <th class="text-base px-4 py-2">自動チェック</th>
         <th class="text-base px-4 py-2">チェック日時</th>
-        <th class="text-base px-4 py-2">メモ</th>
       </tr>
       <tbody>
         @foreach ($keyword_groups as $keyword_group)
         <tr>
-          <td class="border px-4 py-2">{{ $keyword_group->keyword }}</td>
+          <td class="border px-4 py-2">
+            <a href="{{ route('keyword.edit', ['keyword' => $keyword_group->id]) }}">{{ $keyword_group->keyword }}</a>
+          </td>
+          <td class="border px-4 py-2">
+            {{ $keyword_group->search_repository_num }}
+          </td>
           <td class="border px-4 py-2">
             @if (is_null($keyword_group->check_result))
               <span>-</span>
@@ -40,7 +45,6 @@
               <span>{{ $keyword_group->updated_at->format('Y/m/d H:i') }}</span>
             @endif
           </td>
-          <td class="border px-4 py-2">{{ $keyword_group->keyword_memo }}</td>
         </tr>
         @endforeach
       </tbody>
