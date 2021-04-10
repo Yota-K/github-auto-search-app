@@ -134,6 +134,11 @@ return [
   |
   */
 
+  /*
+   * Github APIのトークン
+   */
+  'github_token' => env('GITHUB_TOKEN'),
+
   'providers' => [
 
     /*
