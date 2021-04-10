@@ -29,7 +29,7 @@ class KeywordGroupSeeder extends Seeder
         'keyword_memo' => null,
         'search_repository_num' => 10,
         'auto_check_date' => now(),
-        'user_id' => 1,
+        'user_id' => 2,
         'created_at' => now(),
         'updated_at' => now()
       ],
@@ -47,7 +47,7 @@ class KeywordGroupSeeder extends Seeder
         'keyword_memo' => null,
         'search_repository_num' => 20,
         'auto_check_date' => now(),
-        'user_id' => 1,
+        'user_id' => 3,
         'created_at' => now(),
         'updated_at' => now()
       ],
@@ -57,6 +57,15 @@ class KeywordGroupSeeder extends Seeder
         'search_repository_num' => 20,
         'auto_check_date' => now(),
         'user_id' => 1,
+        'created_at' => now(),
+        'updated_at' => now()
+      ],
+      [
+        'keyword' => 'jamstack',
+        'keyword_memo' => null,
+        'search_repository_num' => 20,
+        'auto_check_date' => now(),
+        'user_id' => 2,
         'created_at' => now(),
         'updated_at' => now()
       ]
