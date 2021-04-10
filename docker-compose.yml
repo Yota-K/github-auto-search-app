@@ -38,5 +38,11 @@ services:
       - ./mysql:/etc/mysql/mysql.conf.d
       - github_auto_search_data:/var/lib/mysql
 
+  github_auto_search_redis:
+    container_name: github_auto_search_redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+
 volumes:
   github_auto_search_data:
