@@ -36,5 +36,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
   ])->name('manual_check');
 
   // 検索結果の表示
-  // Route::get('/search-result/{id}', [App\Http\Controllers\Admin\SearchResultController::class], 'show');
+  Route::get('/search-result/{id}', [App\Http\Controllers\Admin\SearchResultController::class, 'show'])->name('search_result');
 });
