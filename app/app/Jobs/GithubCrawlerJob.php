@@ -51,16 +51,22 @@ class GithubCrawlerJob implements ShouldQueue
 
     // 検索処理実行
     $GithubCrawlerService = new GithubCrawlerService();
-    $search_results = $GithubCrawlerService->search_results($keyword, $search_repository_num);
+    $get_search_results = $GithubCrawlerService->search_results($keyword, $search_repository_num);
+    $status_code = $get_search_results['status_code'];
+    $search_results = $get_search_results['results'];
 
-    Log::info($search_results);
-
-    if ($search_results) {
+    if ($status_code >= 200 && $status_code <= 299) {
       $i = 0;
+
+      if (!$search_results) {
+        $this->check_status_failed($check_keyword_group_record);
+      }
 
       foreach ($search_results as $search_result) {
         if ($i >= $search_repository_num) break;
 
+        // MEMO: 既に$keyword_group_id（検索対象のキーワードのテーブルの主キー）が登録されてる時は
+        // レコードの新規作成ではなくUPDATEするようにする
         $SearchResult = new SearchResult();
         $SearchResult->repository_name = $search_result['full_name'];
         $SearchResult->repository_url = $search_result['html_url'];
@@ -73,10 +79,30 @@ class GithubCrawlerJob implements ShouldQueue
 
         $i++;
       }
-    } else {
-      Log::error('リポジトリの検索結果の取得に失敗しました');
 
-      return;
+      // チェック終了後にステータス変更
+      $check_keyword_group_record->check_status = $check_keyword_group_record::SUCCESS;
+      $check_keyword_group_record->save();
+    } else {
+      Log::error(sprintf("リクエストボディ: %s\nステータスコード: %d", $search_results, $status_code));
+
+      $this->check_status_failed($check_keyword_group_record);
+
+      return false;
     }
+  }
+
+  /**
+   * ステータスコード異常・クローリング結果の取得に失敗した時にステータスをFAILEDに変更する
+   *
+   * @var \App\Models\KeywordGroup
+   * @return false
+   */
+  private function check_status_failed(KeywordGroup $check_keyword_group_record)
+  {
+    $check_keyword_group_record->check_status = $check_keyword_group_record::FAILED;
+    $check_keyword_group_record->save();
+
+    return false;
   }
 }

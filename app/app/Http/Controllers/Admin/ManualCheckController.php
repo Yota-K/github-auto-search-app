@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\KeywordGroup;
 use App\Jobs\GithubCrawlerJob;
 
 class ManualCheckController extends Controller
 {
+
+  /**
+   * 手動でGithubのリポジトリの検索を行う
+   *
+   * @param  keyword_groupsテーブルの主キー  $keyword_group_id
+   * @return \Illuminate\Http\Response
+   */
   public function manual_check(int $keyword_group_id)
   {
     $KeywordGroup = new KeywordGroup();
