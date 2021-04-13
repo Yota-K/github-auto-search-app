@@ -10,6 +10,13 @@ class KeywordGroup extends Model
   use HasFactory;
 
   /**
+   * チェック中のステータスを判定するための数値
+   */
+  const RUNNING = 0;
+  const SUCCESS = 1;
+  const FAILED = 2;
+
+  /**
    * 日付を変形する属性
    *
    * @var array

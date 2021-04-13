@@ -18,8 +18,23 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 // 管理画面
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-  Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin');
+  Route::get('/', [
+    App\Http\Controllers\Admin\DashboardController::class,
+    'index'
+  ])->name('admin');
 
   // 検索キーワードの編集関連
-  Route::resource('/keyword', \App\Http\Controllers\Admin\KeywordGroupController::class)->except(['index', 'show']);
+  Route::resource(
+    '/keyword',
+    \App\Http\Controllers\Admin\KeywordGroupController::class
+  )->except(['index', 'show']);
+
+  // クローリング処理
+  Route::post('/github-crawling/{keyword_group_id}', [
+    \App\Http\Controllers\Admin\ManualCheckController::class,
+    'manual_check'
+  ])->name('manual_check');
+
+  // 検索結果の表示
+  // Route::get('/search-result/{id}', [App\Http\Controllers\Admin\SearchResultController::class], 'show');
 });

@@ -9,9 +9,10 @@
       <tr>
         <th class="text-base px-4 py-2">キーワード</th>
         <th class="text-base px-4 py-2">検索を行うリポジトリ数</th>
-        <th class="text-base px-4 py-2">検索結果</th>
         <th class="text-base px-4 py-2">自動チェック</th>
         <th class="text-base px-4 py-2">チェック日時</th>
+        <th class="text-base px-4 py-2">検索結果</th>
+        <th class="text-base px-4 py-2">手動チェック</th>
       </tr>
       <tbody>
         @foreach ($keyword_groups as $keyword_group)
@@ -21,15 +22,6 @@
           </td>
           <td class="border px-4 py-2">
             {{ $keyword_group->search_repository_num }}
-          </td>
-          <td class="border px-4 py-2">
-            @if (is_null($keyword_group->check_result))
-              <span>-</span>
-            @elseif ($keyword_group->check_result)
-              <span>成功</span>
-            @else
-              <span>失敗</span>
-            @endif
           </td>
           <td class="border px-4 py-2">
             @if (is_null($keyword_group->auto_check_date))
@@ -44,6 +36,23 @@
             @else
               <span>{{ $keyword_group->updated_at->format('Y/m/d H:i') }}</span>
             @endif
+          </td>
+          <td class="border px-4 py-2">
+            @if (is_null($keyword_group->check_status))
+              <span>-</span>
+            @elseif ($keyword_group->check_status === 0)
+              <span>処理中</span>
+            @elseif ($keyword_group->check_status === 1)
+              <span>成功</span>
+            @else
+              <span>失敗</span>
+            @endif
+          </td>
+          <td class="border px-4 py-2">
+            <form method="POST" action="{{ route('manual_check', ['keyword_group_id' => $keyword_group->id]) }}">
+              @csrf
+              <button type="submit">手動チェック</button>
+            </form>
           </td>
         </tr>
         @endforeach
