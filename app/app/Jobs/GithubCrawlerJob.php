@@ -49,6 +49,20 @@ class GithubCrawlerJob implements ShouldQueue
     $search_repository_num = $check_keyword_group_record->search_repository_num;
     $user_id = $check_keyword_group_record->user_id;
 
+    // 検索対象のキーワードが既に登録されてる時は該当レコードを一度削除する
+    $first_record = SearchResult::where('keyword_group_id', $keyword_group_id)
+      ->where('user_id', $user_id)
+      ->exists();
+
+    if ($first_record) {
+      $delete_records = SearchResult::where('keyword_group_id', $keyword_group_id)
+        ->where('user_id', $user_id);
+
+      foreach ($delete_records->cursor() as $search_result) {
+        $search_result->delete();
+      }
+    }
+
     // 検索処理実行
     $GithubCrawlerService = new GithubCrawlerService();
     $get_search_results = $GithubCrawlerService->search_results($keyword, $search_repository_num);
@@ -65,8 +79,6 @@ class GithubCrawlerJob implements ShouldQueue
       foreach ($search_results as $search_result) {
         if ($i >= $search_repository_num) break;
 
-        // MEMO: 既に$keyword_group_id（検索対象のキーワードのテーブルの主キー）が登録されてる時は
-        // レコードの新規作成ではなくUPDATEするようにする
         $SearchResult = new SearchResult();
         $SearchResult->repository_name = $search_result['full_name'];
         $SearchResult->repository_url = $search_result['html_url'];
@@ -87,8 +99,6 @@ class GithubCrawlerJob implements ShouldQueue
       Log::error(sprintf("リクエストボディ: %s\nステータスコード: %d", $search_results, $status_code));
 
       $this->check_status_failed($check_keyword_group_record);
-
-      return false;
     }
   }
 
