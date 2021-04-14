@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Log;
-
 class GithubCrawlerService 
 {
   const BASE_URL = 'https://api.github.com/search/repositories';

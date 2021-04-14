@@ -8,7 +8,6 @@ use App\Jobs\GithubCrawlerJob;
 
 class ManualCheckController extends Controller
 {
-
   /**
    * 手動でGithubのリポジトリの検索を行う
    *
