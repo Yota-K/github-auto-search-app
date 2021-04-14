@@ -19,7 +19,7 @@
         @foreach ($keyword_groups as $keyword_group)
         <tr>
           <td class="border px-4 py-2">
-            <a href="{{ route('keyword.edit', ['keyword' => $keyword_group->id]) }}">{{ $keyword_group->keyword }}</a>
+            <a class="underline" href="{{ route('keyword.edit', ['keyword' => $keyword_group->id]) }}">{{ $keyword_group->keyword }}</a>
           </td>
           <td class="border px-4 py-2">
             {{ $keyword_group->search_repository_num }}
@@ -42,20 +42,20 @@
             @if (is_null($keyword_group->check_status))
               <span>-</span>
             @elseif ($keyword_group->check_status === 0)
-              <span>処理中</span>
+              <span class="font-semibold text-blue-600">処理中</span>
             @elseif ($keyword_group->check_status === 1)
-              <span>成功</span>
+              <span class="font-semibold text-green-600">成功</span>
             @else
-              <span>失敗</span>
+              <span class="font-semibold text-red-600">失敗</span>
             @endif
           </td>
           <td class="border px-4 py-2">
-            <a href="{{ route('search_result', ['id' => $keyword_group->id]) }}">検索結果</a>
+            <a class="text-blue-600 underline" href="{{ route('search_result', ['id' => $keyword_group->id]) }}">検索結果</a>
           </td>
           <td class="border px-4 py-2">
             <form method="POST" action="{{ route('manual_check', ['keyword_group_id' => $keyword_group->id]) }}">
               @csrf
-              <button type="submit">手動チェック</button>
+              <button class="font-semibold text-red-600" type="submit">手動チェック</button>
             </form>
           </td>
         </tr>
