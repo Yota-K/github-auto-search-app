@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\SearchResultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,17 +25,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
   ])->name('admin');
 
   // 検索キーワードの編集関連
-  Route::resource(
-    '/keyword',
-    \App\Http\Controllers\Admin\KeywordGroupController::class
-  )->except(['index', 'show']);
+  Route::resource('/keyword', App\Http\Controllers\Admin\KeywordGroupController::class)
+    ->except(['index', 'show']);
 
   // クローリング処理
   Route::post('/github-crawling/{keyword_group_id}', [
-    \App\Http\Controllers\Admin\ManualCheckController::class,
+    App\Http\Controllers\Admin\ManualCheckController::class,
     'manual_check'
   ])->name('manual_check');
 
   // 検索結果の表示
-  Route::get('/search-result/{id}', [App\Http\Controllers\Admin\SearchResultController::class, 'show'])->name('search_result');
+  Route::get('/search-result/{id}', [SearchResultController::class, 'show'])
+    ->name('search_result');
+
+  // 検索結果のCSVダウンロード
+  Route::get('/search-result/csv-download/{id}', [SearchResultController::class, 'csv_download'])
+    ->name('search_result_csv_download');
 });

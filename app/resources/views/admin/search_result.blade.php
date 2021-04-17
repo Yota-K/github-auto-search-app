@@ -5,6 +5,13 @@
   @if ($search_results->count() === 0)
     <p>検索結果がありません</p>
   @else
+  <form method="GET" action="{{ route('search_result_csv_download', ['id' => $id]) }}">
+    <input
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      type="submit"
+      value="ダウンロード"
+    >
+  </form>
     <table class="w-full table-auto">
       <tr>
         <th class="text-base px-4 py-2">リポジトリ名</th>
