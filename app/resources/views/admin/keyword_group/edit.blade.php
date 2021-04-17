@@ -1,4 +1,4 @@
-<?php $title = 'キーワード編集画面' ?>
+<?php $title = $keyword_group->keyword . 'の編集画面' ?>
 @extends ('layouts.app')
 
 @section ('content')
