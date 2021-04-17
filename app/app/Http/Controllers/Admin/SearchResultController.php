@@ -16,16 +16,16 @@ class SearchResultController extends Controller
    * @param  keyword_groupsテーブルのID
    * @return \Illuminate\Http\Response
    */
-  public function show(int $id)
+  public function show(int $keyword_group_id)
   {
     $user_id = Auth::id();
 
-    $search_results = SearchResult::where('keyword_group_id', $id)
+    $search_results = SearchResult::where('keyword_group_id', $keyword_group_id)
       ->where('user_id', $user_id)
       ->orderBy('star_count', 'desc')
       ->paginate(10);
 
-    return view('admin.search_result', compact('search_results', 'id'));
+    return view('admin.search_result', compact('search_results', 'keyword_group_id'));
   }
 
   /**
@@ -33,10 +33,10 @@ class SearchResultController extends Controller
    *
    * @param  keyword_groupsテーブルのID
    */
-  public function csv_download(int $id)
+  public function csv_download(int $keyword_group_id)
   {
     $user_id = Auth::id();
-    $KeywordGroup = KeywordGroup::where('id', $id)->where('user_id', $user_id)->findOrFail($id);
+    $KeywordGroup = KeywordGroup::where('id', $keyword_group_id)->where('user_id', $user_id)->findOrFail($keyword_group_id);
     $search_keyword = $KeywordGroup->keyword;
 
     // ダウンロードするCSVファイル名を生成
@@ -44,7 +44,7 @@ class SearchResultController extends Controller
     $download_filename = $SearchResultService->csv_download_filename($search_keyword);
 
     // 出力対象のデータを取得
-    $search_results = $SearchResultService->get_search_results($id, $user_id);
+    $search_results = $SearchResultService->get_search_results($keyword_group_id, $user_id);
 
     // CSVエクスポート処理
     return $SearchResultService->export_csv(

@@ -50,7 +50,7 @@
             @endif
           </td>
           <td class="border px-4 py-2">
-            <a class="text-blue-600 underline" href="{{ route('search_result', ['id' => $keyword_group->id]) }}">検索結果</a>
+            <a class="text-blue-600 underline" href="{{ route('search_result', ['keyword_group_id' => $keyword_group->id]) }}">検索結果</a>
           </td>
           <td class="border px-4 py-2">
             <form method="POST" action="{{ route('manual_check', ['keyword_group_id' => $keyword_group->id]) }}">

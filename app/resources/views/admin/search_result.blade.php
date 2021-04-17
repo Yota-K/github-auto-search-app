@@ -5,7 +5,7 @@
   @if ($search_results->count() === 0)
     <p>検索結果がありません</p>
   @else
-  <form method="GET" action="{{ route('search_result_csv_download', ['id' => $id]) }}">
+  <form method="GET" action="{{ route('search_result_csv_download', ['keyword_group_id' => $keyword_group_id]) }}">
     <input
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       type="submit"

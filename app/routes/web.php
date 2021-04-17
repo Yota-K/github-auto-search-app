@@ -35,10 +35,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
   ])->name('manual_check');
 
   // 検索結果の表示
-  Route::get('/search-result/{id}', [SearchResultController::class, 'show'])
+  Route::get('/search-result/{keyword_group_id}', [SearchResultController::class, 'show'])
     ->name('search_result');
 
   // 検索結果のCSVダウンロード
-  Route::get('/search-result/csv-download/{id}', [SearchResultController::class, 'csv_download'])
+  Route::get('/search-result/csv-download/{keyword_group_id}', [SearchResultController::class, 'csv_download'])
     ->name('search_result_csv_download');
 });
