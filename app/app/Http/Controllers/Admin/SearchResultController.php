@@ -20,12 +20,16 @@ class SearchResultController extends Controller
   {
     $user_id = Auth::id();
 
+    $keyword = KeywordGroup::where('id', $keyword_group_id)
+      ->findOrFail($keyword_group_id)
+      ->keyword;
+
     $search_results = SearchResult::where('keyword_group_id', $keyword_group_id)
       ->where('user_id', $user_id)
       ->orderBy('star_count', 'desc')
       ->paginate(10);
 
-    return view('admin.search_result', compact('search_results', 'keyword_group_id'));
+    return view('admin.search_result', compact('keyword_group_id', 'keyword', 'search_results'));
   }
 
   /**
