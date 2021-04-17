@@ -51,4 +51,12 @@ class KeywordGroup extends Model
       return '';
     }
   }
+
+  /**
+   * 検索対象のキーワードに紐づく検索結果を取得
+   */
+  public function search_results()
+  {
+    return $this->hasMany(SearchResult::class);
+  }
 }
