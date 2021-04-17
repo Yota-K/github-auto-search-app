@@ -18,8 +18,9 @@ class SearchResultService
 
   /**
    * CSVファイルの名前を出力
+   *
    */
-  public function csv_download_filename(string $search_keyword)
+  public function csv_download_filename($search_keyword)
   {
     $now = Carbon::now();
     return sprintf('%sのクローリング結果_%s.csv', $search_keyword, $now->format('Y-m-d-h-i'));
@@ -29,9 +30,9 @@ class SearchResultService
    * CSVファイルに書き出すデータを取得
    *
    */
-  public function get_search_results(int $id, int $user_id)
+  public function get_search_results($keyword_group_id, $user_id)
   {
-    $query = SearchResult::where('search_results.keyword_group_id', $id)
+    $query = SearchResult::where('search_results.keyword_group_id', $keyword_group_id)
       ->where('search_results.user_id', $user_id)
       ->join('keyword_groups', 'search_results.keyword_group_id', '=', 'keyword_groups.id')
       ->select(
@@ -50,9 +51,8 @@ class SearchResultService
   /**
    * 検索結果のCSVエクスポート
    *
-   * @param  keyword_groupsテーブルのID
    */
-  public function export_csv(array $header, string $download_filename, $cursor)
+  public function export_csv($header, $download_filename, $cursor)
   {
     return response()->streamDownload(function() use($header, $cursor) {
       // ファイルを書き込みモードで開く

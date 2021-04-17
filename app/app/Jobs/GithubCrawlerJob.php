@@ -28,7 +28,6 @@ class GithubCrawlerJob implements ShouldQueue
    * Create a new job instance.
    *
    * @param 検索対象のレコードのインスタンス $check_keyword_group_record
-   * @return void
    */
   public function __construct(KeywordGroup $check_keyword_group_record)
   {
@@ -105,8 +104,6 @@ class GithubCrawlerJob implements ShouldQueue
   /**
    * ステータスコード異常・クローリング結果の取得に失敗した時にステータスをFAILEDに変更する
    *
-   * @var \App\Models\KeywordGroup
-   * @return false
    */
   private function check_status_failed(KeywordGroup $check_keyword_group_record)
   {

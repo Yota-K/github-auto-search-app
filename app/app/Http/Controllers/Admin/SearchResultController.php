@@ -36,7 +36,10 @@ class SearchResultController extends Controller
   public function csv_download(int $keyword_group_id)
   {
     $user_id = Auth::id();
-    $KeywordGroup = KeywordGroup::where('id', $keyword_group_id)->where('user_id', $user_id)->findOrFail($keyword_group_id);
+
+    $KeywordGroup = KeywordGroup::where('id', $keyword_group_id)
+      ->where('user_id', $user_id)
+      ->findOrFail($keyword_group_id);
     $search_keyword = $KeywordGroup->keyword;
 
     // ダウンロードするCSVファイル名を生成

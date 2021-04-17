@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class GithubCrawlerService 
+class GithubCrawlerService
 {
   const BASE_URL = 'https://api.github.com/search/repositories';
 
@@ -17,7 +17,7 @@ class GithubCrawlerService
    * @param 検索対象のキーワード $keyword
    * @param 検索したいリポジトリの数 $search_repository_num
    */
-  public function search_results(string $keyword, int $search_repository_num)
+  public function search_results($keyword, $search_repository_num)
   {
     $format = null;
 
