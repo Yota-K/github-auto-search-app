@@ -45,7 +45,7 @@ class KeywordGroupRequest extends FormRequest
   {
     return [
       'keyword' => 'required|max:50',
-      'search_repository_num' => 'required|integer|between:1,100',
+      'search_repository_num' => 'required|integer|between:1,300',
       'auto_check_date' => 'nullable|date_format:Y-m-d H:i:s',
       'keyword_memo' => 'nullable|min:1'
     ];
