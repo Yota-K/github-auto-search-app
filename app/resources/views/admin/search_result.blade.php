@@ -1,9 +1,12 @@
-<?php $title = $keyword . 'の検索結果' ?>
+<?php
+$title = $keyword . 'の検索結果';
+$total_count = $search_results->total();
+?>
 @extends ('layouts.app')
 
 @section ('content')
     <div class="flex justify-between mb-4">
-      <h1 class="text-2xl">{{ $keyword }}の検索結果一覧</h1>
+      <h1 class="text-2xl">{{ $keyword }}の検索結果一覧 {{ isset($total_count) ? $total_count . '件' : ''}}</h1>
       @if ($search_results->count() === 0)
       <p>検索結果がありません</p>
       @else
