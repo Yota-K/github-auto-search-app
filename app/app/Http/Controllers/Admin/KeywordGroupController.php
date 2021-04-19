@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\KeywordGroup;
+use App\Models\SearchResult;
 use App\Http\Requests\KeywordGroupRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,6 +98,13 @@ class KeywordGroupController extends Controller
   {
     $KeywordGroup = KeywordGroup::where('id', $id)->findOrFail($id);
     $KeywordGroup->delete();
+
+    // 検索結果がある場合は、検索結果も一緒に削除する
+    $search_result_records = SearchResult::where('keyword_group_id', $id);
+
+    if ($search_result_records->exists()) {
+      $search_result_records->delete();
+    }
 
     return redirect('/admin');
   }
