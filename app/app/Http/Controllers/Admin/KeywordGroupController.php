@@ -72,6 +72,9 @@ class KeywordGroupController extends Controller
   {
     $KeywordGroup = KeywordGroup::where('id', $id)->findOrFail($id);
 
+    // ログインしてるユーザーIDと更新しようとしているユーザーのIDが違う場合は処理を中断
+    if (Auth::id() !== $KeywordGroup->user_id) return;
+
     $KeywordGroup->keyword = $request->keyword;
     $KeywordGroup->search_repository_num = $request->search_repository_num;
 
@@ -97,6 +100,9 @@ class KeywordGroupController extends Controller
   public function destroy(int $id)
   {
     $KeywordGroup = KeywordGroup::where('id', $id)->findOrFail($id);
+
+    if (Auth::id() !== $KeywordGroup->user_id) return;
+
     $KeywordGroup->delete();
 
     // 検索結果がある場合は、検索結果も一緒に削除する
