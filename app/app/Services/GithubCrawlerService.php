@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use GuzzleHttp\Promise;
+
 class GithubCrawlerService
 {
   const BASE_URL = 'https://api.github.com/search/repositories';
@@ -16,32 +18,44 @@ class GithubCrawlerService
    *
    * @param 検索対象のキーワード $keyword
    * @param 検索したいリポジトリの数 $search_repository_num
+   * @return array|false
    */
-  public function search_results($keyword, $search_repository_num)
+  public function search_results(string $keyword, int $search_repository_num)
   {
-    $format = null;
+    $promises = $endpoints = $results= [];
 
-    // 1〜30件のリポジトリの情報を取得したいとき
-    if ($search_repository_num <= 30) {
-      $format = self::BASE_URL . "?q=%s+in:name&sort=stars&access_token=%s";
-    } else {
-      // 1～100件目のリポジトリ情報
-      // MEMO: 100件以上のリポジトリを取得するには、ループ内でリクエストを送る必要がありそう
-      $format = self::BASE_URL . "?q=%s+in:name&sort=stars&access_token=%s&per_page=100&page=1";
+    $format = self::BASE_URL . '?q=%s+in:name&sort=stars&access_token=%s&per_page=100&page=%d';
+    $client = new \GuzzleHttp\Client();
+
+    $search_count= 1;
+
+    // 検索を行うエンドポイントに対して非同期でリクエストを送る
+    while ($search_count <= ceil($search_repository_num / 100)) {
+      $endpoint = sprintf($format, $keyword, $this->github_token, $search_count);
+      $endpoints[] = $endpoint;
+      $promises[] = $client->getAsync($endpoint);
+
+      $search_count++;
     }
 
-    $endpoint = sprintf($format, $keyword, $this->github_token);
+    if (!$promises) return false;
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('GET', $endpoint);
-    $body = $response->getBody();
-    $status_code = $response->getStatusCode();
+    // 検索結果を取得する
+    // 全てのPromiseが実行された後の結果が配列で返ってくる
+    // waitをつけることで、可能であればPromiseが実行されるまで待つ
+    foreach (Promise\Utils::all($promises)->wait() as $key => $response) {
+      $status_code = $response->getStatusCode();
 
-    $results = json_decode($body, true);
+      if ($status_code >= 200 && $status_code <= 299) {
+        $obj = json_decode($response->getBody(), true);
+        $results[] = $obj['items'];
+      } else {
+        Log::error(sprintf('HTTP STATUS CODE %s = %s', $endpoints[$key], $status_code));
 
-    return [
-      'status_code' => $status_code,
-      'results' => $results['items'],
-    ];
+        break;
+      }
+    }
+
+    return $results;
   }
 }
