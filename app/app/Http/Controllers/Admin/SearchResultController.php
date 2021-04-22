@@ -44,6 +44,7 @@ class SearchResultController extends Controller
     $KeywordGroup = KeywordGroup::where('id', $keyword_group_id)
       ->where('user_id', $user_id)
       ->findOrFail($keyword_group_id);
+
     $search_keyword = $KeywordGroup->keyword;
 
     // ダウンロードするCSVファイル名を生成
