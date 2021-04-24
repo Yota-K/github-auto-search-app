@@ -1,7 +1,7 @@
 @extends ('layouts.app')
 
 @section ('content')
-  <h1>管理画面</h1>
+  <h1>検索結果一覧</h1>
   @if (!$keyword_groups)
     <p>キーワードが登録されていません</p>
   @else

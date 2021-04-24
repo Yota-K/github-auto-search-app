@@ -1,16 +1,7 @@
 @extends ('layouts.app')
 
 @section ('content')
-  @if (Auth::check())
-    <ul>
-      <li>
-        <a href="{{ route('admin') }}">管理画面</a>
-      </li>
-      <li>
-        <a href="{{ route('keyword.create') }}">キーワードの新規登録</a>
-      </li>
-    </ul>
-  @else
+  @if (!Auth::check())
     <div class="pb-36">
       <div class="flex justify-center">
         <a href="/login" class="bg-red-600 hover:bg-red-500 text-white btn-base-style">ログイン</a>
