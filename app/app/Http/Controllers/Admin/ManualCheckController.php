@@ -30,6 +30,9 @@ class ManualCheckController extends Controller
     // Githubのクローリングを行うジョブを実行する
     GithubCrawlerJob::dispatch($check_keyword_group_record);
 
-    return redirect('/admin');
+    return redirect('/admin')->with([
+      'flash_message' => '検索処理を実行中です',
+      'bg_color' => 'bg-green-500'
+    ]);
   }
 }

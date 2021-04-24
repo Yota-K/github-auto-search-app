@@ -2,6 +2,7 @@
 @extends ('layouts.app')
 
 @section ('content')
+  <x-alert />
   <div class="flex justify-between">
     <h1 class="text-2xl">{{ $title }}</h1>
     <form method="POST" action="{{ route('keyword.destroy', ['keyword' => $keyword_group->id]) }}">

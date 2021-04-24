@@ -18,8 +18,6 @@
       </ul>
       <h2 class="text-2xl my-2">追加したい機能</h2>
       <ul class="list-disc">
-        <li>フラッシュメッセージ表示</li>
-        <li>ログイン前・ログイン後の画面作成</li>
         <li>UIを見やすく・スタイル周りの整理</li>
         <li>Supervisorを導入して、Laravelのキューワーカを永続化させる</li>
         <li>GitHubのリポジトリを検索する処理を指定した時間に自動で実行できるようにする</li>

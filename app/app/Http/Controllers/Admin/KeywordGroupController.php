@@ -44,7 +44,11 @@ class KeywordGroupController extends Controller
 
     $KeywordGroup->save();
 
-    return redirect('/admin');
+    return redirect('/admin')
+      ->with([
+        'flash_message' => 'データを保存しました',
+        'bg_color' => 'bg-green-500'
+      ]);
   }
 
   /**
@@ -70,7 +74,7 @@ class KeywordGroupController extends Controller
   {
     $KeywordGroup = KeywordGroup::where('id', $id)->findOrFail($id);
 
-    // ログインしてるユーザーIDと更新しようとしているユーザーのIDが違う場合は処理を中断
+    // ログインしてるユーザーIDと更新しようとしているユーザーのIDが同じかどうかチェック
     if (Auth::id() !== $KeywordGroup->user_id) return;
 
     $KeywordGroup->keyword = $request->keyword;
@@ -84,7 +88,12 @@ class KeywordGroupController extends Controller
 
     $KeywordGroup->save();
 
-    return redirect()->route('keyword.edit', $KeywordGroup);
+    return redirect()
+      ->route('keyword.edit', $KeywordGroup)
+      ->with([
+        'flash_message' => 'データを更新しました',
+        'bg_color' => 'bg-green-500'
+      ]);
   }
 
   /**
@@ -108,6 +117,10 @@ class KeywordGroupController extends Controller
       $search_result_records->delete();
     }
 
-    return redirect('/admin');
+    return redirect('/admin')
+      ->with([
+        'flash_message' => 'データを削除しました',
+        'bg_color' => 'bg-red-500'
+      ]);
   }
 }

@@ -1,6 +1,7 @@
 @extends ('layouts.app')
 
 @section ('content')
+  <x-alert />
   <h1>検索結果一覧</h1>
   @if (!$keyword_groups)
     <p>キーワードが登録されていません</p>

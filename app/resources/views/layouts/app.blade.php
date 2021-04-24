@@ -16,4 +16,15 @@
     </main>
     @include ('includes.footer')
   </body>
+
+  @if (Request::is('admin') || Request::is('admin/keyword/*/edit'))
+  <script>
+    const closeBtn = document.getElementById('close-btn');
+    const alertDiv = document.getElementById('alert');
+
+    closeBtn.addEventListener('click', () => {
+      alertDiv.style.display = 'none';
+    });
+  </script>
+  @endif
 </html>
