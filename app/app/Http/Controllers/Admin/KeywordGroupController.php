@@ -37,10 +37,8 @@ class KeywordGroupController extends Controller
 
     // データが入力されている時のみ登録処理を行う
     $keyword_memo = $request->keyword_memo;
-    $auto_check_date = $request->auto_check_date;
 
-    if ($auto_check_date || $keyword_memo) {
-      $KeywordGroup->auto_check_date = $auto_check_date;
+    if ($keyword_memo) {
       $KeywordGroup->keyword_memo = $keyword_memo;
     }
 
@@ -79,10 +77,8 @@ class KeywordGroupController extends Controller
     $KeywordGroup->search_repository_num = $request->search_repository_num;
 
     $keyword_memo = $request->keyword_memo;
-    $auto_check_date = $request->auto_check_date;
 
-    if ($auto_check_date || $keyword_memo) {
-      $KeywordGroup->auto_check_date = $auto_check_date;
+    if ($keyword_memo) {
       $KeywordGroup->keyword_memo = $keyword_memo;
     }
 
