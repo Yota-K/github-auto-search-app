@@ -12,7 +12,7 @@ $total_count = $search_results->total();
       @else
       <form method="GET" action="{{ route('search_result_csv_download', ['keyword_group_id' => $keyword_group_id]) }}">
         <input
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="bg-blue-500 hover:bg-blue-700 text-white btn-base-style"
         type="submit"
         value="CSVダウンロード"
         >

@@ -56,7 +56,7 @@
       >{{ old('keyword_memo') }}</textarea>
     </div>
     <input
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      class="bg-blue-500 hover:bg-blue-700 text-white btn-base-style"
       type="submit"
       value="登録"
     >

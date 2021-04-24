@@ -31192,6 +31192,17 @@ video {
   color: rgba(55, 65, 81, var(--tw-text-opacity));
 }
 
+/* ボタンのベースのスタイル */
+
+.btn-base-style {
+  border-radius: 0.25rem;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
